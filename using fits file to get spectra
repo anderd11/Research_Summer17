@@ -1,0 +1,9 @@
+#from astropy.io import fits
+
+#variable = fits.open(''filename)
+
+#subclass is spectral data
+
+#variable[1].data.field('subclass') gives all column info
+
+#variable[1].data.columns.info to look at what other data is in file 
