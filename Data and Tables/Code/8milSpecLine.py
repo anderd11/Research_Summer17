@@ -48,3 +48,5 @@ plt.ylim([-30,-20])
 plt.scatter([69], [-27], marker='o', s=5, color='red')
 plt.scatter([89], [-22], marker='o', s=5, color='red')
 abline(0.25, -44.25)
+
+# plotting line where stream is expected to be
