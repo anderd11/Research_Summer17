@@ -58,33 +58,9 @@ b_1.extend(b_2)
 new_l = []
 new_b = []
 
-# shifts each coordinate and stores it's new value
-for i in range(len(l_1)):
-     h, k = rotate(float(l_1[i]), float(b_1[i]), 75.96375653)
-     new_l.append(h)
-     new_b.append(k)
-            
-## builds rotated plot of starts
-#plt.scatter(new_l, new_b, s = 0.1, label = 'Rotated Star Positions')
-#plt.xlabel('l\'')
-#plt.ylabel('b\'')
-#plt.xlim(min(new_l), max(new_l))
-#plt.ylim(min(new_b), max(new_b))
-
-## converting old coordinates of stream line using rotate function
-#a, b = (rotate(69, -27, 75.96375653))
-#c, d = (rotate(89, -22, 75.96375653))
-
-## plots new coordinates on graph
-#plt.scatter(a, b)
-#plt.scatter(c, d)
-
-## draw line to check if new points are vertical
-#plt.plot((a, c),(b,d), 'red')
-
-
 '''
 Now that we have the plot roated, we can make a position density graph.
 This plot will show us how many stars share each x-coordinate.
 '''
 
+plt.hist(new_l, 1000, normed=1, facecolor='green', alpha=0.75)
