@@ -1,20 +1,39 @@
 import matplotlib.pyplot as plt
 from csv import reader
 import numpy as np
+from math import *
 
-# function to plot line based on slope and y-intercept
-def abline(slope, intercept):
-    axes = plt.gca()
-    x_vals = np.array(axes.get_xlim())
-    y_vals = (slope * x_vals) + intercept
-    plt.plot(x_vals, y_vals, '--', color='red')
+'''
+Below we will rotate the star positions plot.
+We rotate the plot enough for the stream line to be completely vertical.
+The stream line will also be graphed.
+'''
+
+# function to rotate coordinates     
+def rotate(a, b, angle):
+
+     x = [80.297,-24.52]
+     y = [a, b]
+
+     xx = y[0]-x[0]
+     yy = y[1]-x[1]
+
+     newx = (xx*cos(radians(angle))) - (yy*sin(radians(angle)))
+
+     newy = (xx*sin(radians(angle))) + (yy*cos(radians(angle)))
+
+     newx+= x[0]
+
+     newy+= x[1]
+
+     return newx,newy
 
 # opens and reads data from csv file
 with open('4milNoSpec.csv', 'r') as f:
-    data_1 = list(reader(f))
+     data_1 = list(reader(f))
     
 with open('4milUpper.csv','r') as j:
-    data_2 = list(reader(j))
+     data_2 = list(reader(j))
     
 # stores variables needed for plotting
 objID_1 = [i[0] for i in data_1]
@@ -35,22 +54,37 @@ b_2.pop(0)
 l_1.extend(l_2)
 b_1.extend(b_2)
 
-# creates scatter plot of star positions
-plt.scatter(l_1, b_1, s = 0.1, label = 'Position of Stars')
-plt.xlabel('l\'')
-plt.ylabel('b\'')
+# lists to store shifted coordinates in
+new_l = []
+new_b = []
 
-# sets bounds for the x axis and y axis
-plt.xlim([65,95])
-plt.ylim([-30,-20])
+# shifts each coordinate and stores it's new value
+for i in range(len(l_1)):
+     h, k = rotate(float(l_1[i]), float(b_1[i]), 75.96375653)
+     new_l.append(h)
+     new_b.append(k)
+            
+## builds rotated plot of starts
+#plt.scatter(new_l, new_b, s = 0.1, label = 'Rotated Star Positions')
+#plt.xlabel('l\'')
+#plt.ylabel('b\'')
+#plt.xlim(min(new_l), max(new_l))
+#plt.ylim(min(new_b), max(new_b))
 
-# plotting points where expected stream is located
-plt.scatter([69], [-27], marker='o', s=5, color='red')
-plt.scatter([89], [-22], marker='o', s=5, color='red')
-abline(0.25, -44.25)
+## converting old coordinates of stream line using rotate function
+#a, b = (rotate(69, -27, 75.96375653))
+#c, d = (rotate(89, -22, 75.96375653))
+
+## plots new coordinates on graph
+#plt.scatter(a, b)
+#plt.scatter(c, d)
+
+## draw line to check if new points are vertical
+#plt.plot((a, c),(b,d), 'red')
+
 
 '''
-The above portion just translates each point of our previous position plot.
-The below portion will group each coordinate by their x-position and sort that information
-using a histogram.
+Now that we have the plot roated, we can make a position density graph.
+This plot will show us how many stars share each x-coordinate.
 '''
+
